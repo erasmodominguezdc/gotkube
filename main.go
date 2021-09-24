@@ -1,4 +1,4 @@
-package gotkube
+package main
 
 /*
 https://chromium.googlesource.com/external/github.com/src-d/go-git/+/8b0c2116cea2bbcc8d0075e762b887200a1898e1/example_test.go
