@@ -5,6 +5,7 @@ https://chromium.googlesource.com/external/github.com/src-d/go-git/+/8b0c2116cea
 https://github.com/weaveworks/libgitops
 https://pkg.go.dev/github.com/go-git/go-git/v5#example-Clone
 https://towardsdatascience.com/use-environment-variable-in-your-next-golang-project-39e17c3aaa66
+https://towardsdatascience.com/use-environment-variable-in-your-next-golang-project-39e17c3aaa66
 
  */
 
@@ -21,45 +22,40 @@ import (
 func main() {
 
 	dir, err := createRepoDirectory()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	CheckIfError(err)
 	defer os.RemoveAll(dir) // clean up
 
-	os.Setenv("REPO_URL",  "https://github.com/git-fixtures/basic.git")
-	url := os.Getenv("REPO_URL")
-
-	// Clones the repository into the given dir, just as a normal git clone does
+	url := getEnvVariableFromEnvFile("REPO_URL")
 
 	err = gitClone(err, dir, url)
-
-	// Prints the content of the CHANGELOG file from the cloned repository
 	changelog, err := os.Open(filepath.Join(dir, "CHANGELOG"))
-	if err != nil {
-		log.Fatal(err)
-	}
+	CheckIfError(err)
 
 	io.Copy(os.Stdout, changelog)
 }
 
+
+func CheckIfError(err error) {
+	if err != nil {
+		log.Fatal(err)
+		panic(err)
+	}
+}
+
+// Clones the repository into the given dir, just as a normal git clone does
 func gitClone(err error, dir string, url string) error {
 	_, err = git.PlainClone(dir, false, &git.CloneOptions{
 		URL: url,
 	})
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	CheckIfError(err)
 	return err
 }
 
 func createRepoDirectory() (string, error) {
 	// Tempdir to clone the repository
 	dir, err := ioutil.TempDir("", "clone-example")
-	if err != nil {
-		log.Fatal(err)
-	}
+	CheckIfError(err)
 	return dir, err
 }
 
@@ -70,17 +66,15 @@ func createRepoDirectory() (string, error) {
 func getEnvVariableFromEnvFile(key string) string {
 
 	// SetConfigFile explicitly defines the path, name and extension of the config file.
-	// Viper will use this and not check any of the config paths.
+	// Viper will use this and not CheckIfError any of the config paths.
 	// .env - It will search for the .env file in the current directory
 	viper.SetConfigFile(".env")
 
 	// Find and read the config file
 	err := viper.ReadInConfig()
 
-	if err != nil {
-		log.Fatalf("Error while reading config file %s", err)
-	}
-
+	CheckIfError(err)
+	
 	// viper.Get() returns an empty interface{}
 	// to get the underlying type of the key,
 	// we have to do the type assertion, we know the underlying value is string
