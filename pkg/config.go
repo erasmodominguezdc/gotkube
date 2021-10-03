@@ -11,61 +11,12 @@ https://towardsdatascience.com/use-environment-variable-in-your-next-golang-proj
 
 import (
 	"github.com/spf13/viper"
-	"gopkg.in/src-d/go-git.v4"
-	"github.com/erasmolpa/gotkube/pkg"
-	"io"
-	"io/ioutil"
 	"log"
-	"os"
-	"path/filepath"
-
 )
-
-func main() {
-
-	dir, err := createRepoDirectory()
-	CheckIfError(err)
-	defer os.RemoveAll(dir) // clean up
-
-	url := getEnvVariableFromEnvFile("REPO_URL")
-
-	err = gitClone(err, dir, url)
-	changelog, err := os.Open(filepath.Join(dir, "README.md"))
-	CheckIfError(err)
-
-	io.Copy(os.Stdout, changelog)
-}
-
-
-func CheckIfError(err error) {
-	if err != nil {
-		log.Fatal(err)
-		panic(err)
-	}
-}
-
-// Clones the repository into the given dir, just as a normal git clone does
-func gitClone(err error, dir string, url string) error {
-	_, err = git.PlainClone(dir, false, &git.CloneOptions{
-		URL: url,
-	})
-
-	CheckIfError(err)
-	return err
-}
-
-func createRepoDirectory() (string, error) {
-	// Tempdir to clone the repository
-	dir, err := ioutil.TempDir("", "clone-example")
-	CheckIfError(err)
-	return dir, err
-}
-
-
 
 // use viper package to read .env file
 // return the value of the key
-func getEnvVariableFromEnvFile(key string) string {
+func GetEnvVariableFromEnvFile(key string) string {
 
 	// SetConfigFile explicitly defines the path, name and extension of the config file.
 	// Viper will use this and not CheckIfError any of the config paths.
