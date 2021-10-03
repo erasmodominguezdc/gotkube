@@ -12,7 +12,7 @@ https://towardsdatascience.com/use-environment-variable-in-your-next-golang-proj
 import (
 	"github.com/spf13/viper"
 	"gopkg.in/src-d/go-git.v4"
-	"github.com/erasmolpa/gotkube/pkg"
+	"github.com/erasmodominguezdc/gotkube/pkg"
 	"io"
 	"io/ioutil"
 	"log"
