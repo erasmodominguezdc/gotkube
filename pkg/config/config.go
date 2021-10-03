@@ -11,7 +11,7 @@ https://towardsdatascience.com/use-environment-variable-in-your-next-golang-proj
 
 import (
 	"github.com/spf13/viper"
-	"gotkube/pkg/git"
+	gkdir "gotkube/pkg/system"
 	"log"
 )
 
@@ -27,7 +27,7 @@ func GetEnvVariableFromEnvFile(key string) string {
 	// Find and read the config file
 	err := viper.ReadInConfig()
 
-	git.CheckIfError(err)
+	gkdir.CheckIfError(err)
 	
 	// viper.Get() returns an empty interface{}
 	// to get the underlying type of the key,

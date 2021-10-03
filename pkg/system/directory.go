@@ -1,4 +1,4 @@
-package git
+package system
 
 /*
 https://chromium.googlesource.com/external/github.com/src-d/go-git/+/8b0c2116cea2bbcc8d0075e762b887200a1898e1/example_test.go
@@ -10,7 +10,6 @@ https://towardsdatascience.com/use-environment-variable-in-your-next-golang-proj
  */
 
 import (
-	"gopkg.in/src-d/go-git.v4"
 	"io/ioutil"
 	"log"
 )
@@ -23,15 +22,6 @@ func CheckIfError(err error) {
 	}
 }
 
-// Clones the repository into the given dir, just as a normal git clone does
-func GitClone(err error, dir string, url string) error {
-	_, err = git.PlainClone(dir, false, &git.CloneOptions{
-		URL: url,
-	})
-
-	CheckIfError(err)
-	return err
-}
 
 func CreateRepoDirectory() (string, error) {
 	// Tempdir to clone the repository
