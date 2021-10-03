@@ -10,7 +10,7 @@ https://towardsdatascience.com/use-environment-variable-in-your-next-golang-proj
  */
 
 import (
-	"github.com/spf13/viper"
+	viper "github.com/spf13/viper"
 	gkdir "gotkube/pkg/system"
 	"log"
 )
