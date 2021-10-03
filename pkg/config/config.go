@@ -1,4 +1,4 @@
-package main
+package config
 
 /*
 https://chromium.googlesource.com/external/github.com/src-d/go-git/+/8b0c2116cea2bbcc8d0075e762b887200a1898e1/example_test.go
@@ -11,6 +11,7 @@ https://towardsdatascience.com/use-environment-variable-in-your-next-golang-proj
 
 import (
 	"github.com/spf13/viper"
+	"gotkube/pkg/git"
 	"log"
 )
 
@@ -26,7 +27,7 @@ func GetEnvVariableFromEnvFile(key string) string {
 	// Find and read the config file
 	err := viper.ReadInConfig()
 
-	CheckIfError(err)
+	git.CheckIfError(err)
 	
 	// viper.Get() returns an empty interface{}
 	// to get the underlying type of the key,
